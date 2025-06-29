@@ -3,57 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bhagirathi 101 Leaderboard 🏆</title>
+  <title>Bhagirathi 101 Awards 🏆</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body {
+      background: linear-gradient(to bottom left, #f5f3ff, #fff0f6);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow-x: hidden;
+    }
+
     .title-bg {
       background: linear-gradient(90deg, #fbc2eb, #a18cd1);
     }
+
+    .award-item {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .emoji {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0.8; }
+      50% { transform: translateY(-10px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.8; }
+    }
   </style>
 </head>
-<body class="bg-gradient-to-bl from-blue-50 to-purple-50 min-h-screen flex flex-col items-center p-6">
+<body class="flex flex-col items-center p-6">
 
-  <h1 class="text-3xl font-bold mb-4">Bhagirathi 101 Awards 🏅</h1>
-  <p class="text-gray-600 mb-8 text-center max-w-md">Celebrating the quirkiest, kindest & most epic vibes of Bhagirathi 101!</p>
+  <!-- 💬 Animated Intro Message -->
+  <div id="introMessage" class="text-center mb-6 max-w-lg text-lg text-purple-800 font-semibold animate-pulse">
+    <p>✨ Welcome to the most legendary award ceremony of Bhagirathi 101 ✨</p>
+    <p class="mt-2 text-sm text-purple-500 italic">Celebrating our chaos, our calm, and our cutest madness 💖</p>
+    <button onclick="showLeaderboard()" class="mt-4 bg-pink-300 hover:bg-pink-400 text-white px-6 py-2 rounded-full shadow">
+      Let the magic begin 🎉
+    </button>
+  </div>
 
-  <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-md">
+  <!-- 🏆 Leaderboard Hidden Initially -->
+  <div id="leaderboard" class="hidden bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-md">
+
     <div class="title-bg text-white text-center py-4 font-semibold text-xl">
-      Roommate Leaderboard
+      Roommate Awards
     </div>
-    <ul class="divide-y">
-      <li class="flex justify-between items-center px-6 py-3">
+    <ul class="divide-y text-gray-800">
+      <li class="award-item flex justify-between items-center px-6 py-3" style="animation-delay: 0.2s">
         <span>🍳 Chef of the Room</span>
-        <strong>Asmi</strong>
+        <strong>Asmi & Iqra</strong>
       </li>
-      <li class="flex justify-between items-center px-6 py-3 bg-blue-50">
-        <span>🍪 Snack Monster</span>
+      <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50" style="animation-delay: 0.4s">
+        <span>📚 Academic Weapon</span>
         <strong>Bhumika</strong>
       </li>
-      <li class="flex justify-between items-center px-6 py-3">
+      <li class="award-item flex justify-between items-center px-6 py-3" style="animation-delay: 0.6s">
         <span>📸 Selfie Queen</span>
         <strong>Kusheen</strong>
       </li>
-      <li class="flex justify-between items-center px-6 py-3 bg-blue-50">
-        <span>🤗 Forever Hugger</span>
-        <strong>Rachita</strong>
+      <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50" style="animation-delay: 0.8s">
+        <span> Cutu ❤️🙊</span>
+        <strong>Rachita(hn m hu) thanks</strong>
       </li>
-      <li class="flex justify-between items-center px-6 py-3">
-        <span>🎤 Karaoke Diva</span>
+      <li class="award-item flex justify-between items-center px-6 py-3" style="animation-delay: 1s">
+        <span>🎤 Singer</span>
         <strong>Iqra</strong>
       </li>
-      <li class="flex justify-between items-center px-6 py-3 bg-blue-50">
+      <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50" style="animation-delay: 1.2s">
         <span>📝 Most Organized</span>
-        <strong>Asmi</strong>
+        <strong>Asmi strongly competiting with Bhumi</strong>
       </li>
-      <li class="flex justify-between items-center px-6 py-3">
-        <span>😂 Meme Lord</span>
+      <li class="award-item flex justify-between items-center px-6 py-3" style="animation-delay: 1.4s">
+        <span>😂 Meme ki chodi</span>
         <strong>Bhumika</strong>
+      </li>
+      <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50" style="animation-delay: 1.6s">
+        <span>💫 Dreamer</span>
+        <strong>Iqra</strong>
+      </li>
+      <li class="award-item flex justify-between items-center px-6 py-3" style="animation-delay: 1.8s">
+        <span>🌟 Always There Award</span>
+        <strong>Kusheen</strong>
       </li>
     </ul>
   </div>
 
-  <a href="index.html" class="mt-8 text-purple-700 underline">← Back to Home</a>
+  <a href="index.html" class="mt-10 text-purple-700 underline">← Back to Home</a>
+  <p class="mt-4 text-gray-500 text-sm italic">Every award is just a reminder of how special you all are 💛</p>
 
-  <p class="mt-4 text-gray-500 text-sm italic">Everyone's a winner in our hearts 💛</p>
+  <!-- 🎈 Floating Emojis (background fun) -->
+  <div class="fixed top-4 left-4 text-2xl emoji">🍜</div>
+  <div class="fixed top-10 right-6 text-2xl emoji">🎶</div>
+  <div class="fixed bottom-8 left-8 text-2xl emoji">💖</div>
+  <div class="fixed bottom-12 right-10 text-2xl emoji">☕</div>
+
+  <script>
+    function showLeaderboard() {
+      document.getElementById('introMessage').style.display = 'none';
+      const board = document.getElementById('leaderboard');
+      board.classList.remove('hidden');
+
+      const items = board.querySelectorAll('.award-item');
+      items.forEach((item, index) => {
+        item.style.animation = `slideUp 0.5s ease forwards`;
+        item.style.animationDelay = `${0.2 * (index + 1)}s`;
+      });
+    }
+  </script>
 </body>
 </html>
