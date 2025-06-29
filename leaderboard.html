@@ -6,28 +6,26 @@
   <title>Bhagirathi 101 Awards 🏆</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-
-  .animate-fadeIn {
-    animation: fadeIn 1.5s ease-out forwards;
-  }
     body {
       background: linear-gradient(to bottom left, #fdf2f8, #f0f9ff);
       overflow-x: hidden;
       font-family: 'Segoe UI', sans-serif;
     }
 
-    .award-card {
-      opacity: 0;
-      animation: slideUp 0.8s ease forwards;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 1.5s ease-out forwards;
     }
 
-    @keyframes slideUp {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
+    @keyframes showCard {
+      0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-showCard {
+      animation: showCard 0.8s ease forwards;
     }
 
     .heart {
@@ -68,23 +66,19 @@
     }
 
     @keyframes floatWord {
-      0% {
-        transform: translateY(0) rotate(0deg);
-      }
-      100% {
-        transform: translateY(-120vh) rotate(360deg);
-      }
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-120vh) rotate(360deg); }
     }
   </style>
 </head>
 <body class="p-6 text-center">
 
-  <!-- 🎵 Music -->
+  <!-- 🎵 Background Music -->
   <audio id="bg-music" autoplay loop>
     <source src="assets/music/bg-music.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- 💗 Floating Hearts -->
+  <!-- 💖 Floating Hearts + Word Cloud + Confetti -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       setInterval(() => {
@@ -124,130 +118,107 @@
         setTimeout(() => confetti.remove(), 2000);
       }
     }
-
     window.onload = launchConfetti;
   </script>
 
-  <!-- 🎤 Intro Message -->
- <!-- Intro Splash Title -->
-<div id="splashTitle" class="fixed inset-0 flex items-center justify-center bg-white z-50">
-  <h1 class="text-4xl sm:text-6xl font-extrabold text-pink-600 animate-fadeIn">🎉 Bhagirathi 101 Awards 🏆</h1>
-  
-</div>
+  <!-- 🎉 Splash Screen Title + Let's Go Button -->
+  <div id="splashTitle" class="fixed inset-0 flex flex-col items-center justify-center bg-white z-50 text-center">
+    <h1 class="text-4xl sm:text-6xl font-extrabold text-pink-600 animate-fadeIn mb-6">🎉 Bhagirathi 101 Awards 🏆</h1>
+    <button onclick="startAwards()" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-full shadow-lg text-lg font-medium transition duration-300">
+      Let's Go 🎶
+    </button>
+  </div>
 
+  <!-- 💬 Subtitle -->
   <p class="text-gray-600 italic mb-6">Because every moment deserves a memory, and every roomie a trophy 💖</p>
 
-  <!-- 💬 Chat Bubbles Style Message -->
- 
-  <!-- 🏆 Award Cards -->
-  <div id="awardsContainer" class="space-y-6 max-w-xl mx-auto relative"></div>
-
-<script>
-  const awards = [
-    {
-      title: "🍳 Chef of the Room",
-      color: "bg-pink-100 text-pink-800",
-      desc: "Asmi & Iqra – for every tasty food cooked together 😋"
-    },
-    {
-      title: "📚 Academic Weapon",
-      color: "bg-yellow-100 text-yellow-800",
-      desc: "Bhumika – discipline queen + motivator always 💪📖"
-    },
-    {
-      title: "📸 Selfie Queen",
-      color: "bg-blue-100 text-blue-800",
-      desc: "Kusheen – every pose, every click = flawless 💁‍♀️✨"
-    },
-    {
-      title: "❤️ Cutie Pie Award",
-      color: "bg-purple-100 text-purple-800",
-      desc: "Rachita – Me ofcourse shutup you guys 🧸💞"
-    },
-    {
-      title: "🎤 Sasti Lana Del Rey Award",
-      color: "bg-rose-100 text-rose-800",
-      desc: "Iqra – voice full of ahhswheeoiweoiwoe 🎶"
-    },
-    {
-      title: "📝 Most Organized Award",
-      color: "bg-teal-100 text-teal-800",
-      desc: "Asmi and Bhumi tie 🗓️✨"
-    },
-    {
-      title: "😂 Meme Ki Chodi Award",
-      color: "bg-orange-100 text-orange-800",
-      desc: "Bhumika – kuch b kabhi b"
-    },
-    {
-      title: "💫 Dreamer",
-      color: "bg-indigo-100 text-indigo-800",
-      desc: "Iqra – fantasy thoughts and story vibes 🌙"
-    },
-    {
-      title: "🌟 Always There Award",
-      color: "bg-green-100 text-green-800",
-      desc: "Kusheen – the safest, strongest buddy 💚"
-    },
-  ];
-
-  const container = document.getElementById('awardsContainer');
-
-  let index = 0;
-
-  function showNextAward() {
-    if (index >= awards.length) return;
-
-    const award = awards[index];
-    const card = document.createElement('div');
-    card.className = `${award.color} rounded-xl p-5 shadow-2xl scale-95 opacity-0 animate-showCard`;
-    card.innerHTML = `
-      <h2 class="text-xl font-bold">${award.title}</h2>
-      <p class="text-gray-700 mt-2">${award.desc}</p>
-    `;
-    container.appendChild(card);
-    index++;
-
-    setTimeout(showNextAward, 5000); // Next card in 5s
-  }
-
-  // Start
-  showNextAward();
-</script>
-
-<style>
-  @keyframes showCard {
-    0% {
-      opacity: 0;
-      transform: scale(0.9) translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
-
-  .animate-showCard {
-    animation: showCard 0.8s ease forwards;
-  }
-</style>
-   <div class="text-left max-w-xl mx-auto mb-8">
+  <!-- 💬 Chat Bubbles -->
+  <div class="text-left max-w-xl mx-auto mb-8">
     <div class="chat-bubble">Btw guys... this is not just a farewell</div>
     <div class="chat-bubble">...it's a THANK YOU</div>
     <div class="chat-bubble">For the chaos, love, hugs, fights, fixes and Maggie 💕</div>
     <div class="chat-bubble">Here's to each of you, the vibe makers of 101 🎉</div>
   </div>
 
-  <script>
-  // Hide splash after 3 seconds
-  setTimeout(() => {
-    document.getElementById('splashTitle').style.display = 'none';
-  }, 3000);
-</script>
+  <!-- 🏆 Awards Container -->
+  <div id="awardsContainer" class="space-y-6 max-w-xl mx-auto relative"></div>
 
-
-
+  <!-- 🎤 Back Button -->
   <a href="index.html" class="block mt-10 text-purple-700 underline">Back to Home</a>
   <p class="mt-3 text-gray-500 text-sm italic">Always and forever, Bhagirathi 101 🌙</p>
+
+  <script>
+    const awards = [
+      {
+        title: "🍳 Chef of the Room",
+        color: "bg-pink-100 text-pink-800",
+        desc: "Asmi & Iqra – for every tasty food cooked together 😋"
+      },
+      {
+        title: "📚 Academic Weapon",
+        color: "bg-yellow-100 text-yellow-800",
+        desc: "Bhumika – discipline queen + motivator always 💪📖"
+      },
+      {
+        title: "📸 Selfie Queen",
+        color: "bg-blue-100 text-blue-800",
+        desc: "Kusheen – every pose, every click = flawless 💁‍♀️✨"
+      },
+      {
+        title: "❤️ Cutie Pie Award",
+        color: "bg-purple-100 text-purple-800",
+        desc: "Rachita – Me of course shutup you guys 🧸💞"
+      },
+      {
+        title: "🎤 Sasti Lana Del Rey Award",
+        color: "bg-rose-100 text-rose-800",
+        desc: "Iqra – voice full of ahhswheeoiweoiwoe 🎶"
+      },
+      {
+        title: "📝 Most Organized Award",
+        color: "bg-teal-100 text-teal-800",
+        desc: "Asmi and Bhumi tie 🗓️✨"
+      },
+      {
+        title: "😂 Meme Ki Chodi Award",
+        color: "bg-orange-100 text-orange-800",
+        desc: "Bhumika – kuch b kabhi b"
+      },
+      {
+        title: "💫 Dreamer",
+        color: "bg-indigo-100 text-indigo-800",
+        desc: "Iqra – fantasy thoughts and story vibes 🌙"
+      },
+      {
+        title: "🌟 Always There Award",
+        color: "bg-green-100 text-green-800",
+        desc: "Kusheen – the safest, strongest buddy 💚"
+      },
+    ];
+
+    const container = document.getElementById('awardsContainer');
+    let index = 0;
+
+    function showNextAward() {
+      if (index >= awards.length) return;
+
+      const award = awards[index];
+      const card = document.createElement('div');
+      card.className = `${award.color} rounded-xl p-5 shadow-2xl scale-95 opacity-0 animate-showCard`;
+      card.innerHTML = `
+        <h2 class="text-xl font-bold">${award.title}</h2>
+        <p class="text-gray-700 mt-2">${award.desc}</p>
+      `;
+      container.appendChild(card);
+      index++;
+
+      setTimeout(showNextAward, 5000); // next card in 5 sec
+    }
+
+    function startAwards() {
+      document.getElementById('splashTitle').style.display = 'none';
+      showNextAward();
+    }
+  </script>
 </body>
 </html>
