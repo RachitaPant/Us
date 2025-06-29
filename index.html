@@ -5,18 +5,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bhagirathi 101 💖</title>
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-pink-50 text-center p-6">
-  <h1 class="text-4xl font-bold mb-6">Bhagirathi 101 💕</h1>
-  <p class="text-lg mb-8 italic text-gray-700">A room full of memories, madness, and maggie 🌙🍜</p>
+  <!-- Confetti JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      overflow-x: hidden;
+      background: linear-gradient(to bottom, #ffe4e6, #fff1f2);
+    }
 
-  <div class="flex flex-col items-center gap-4">
-    <a href="yearbook.html" class="bg-pink-200 text-pink-900 px-6 py-3 rounded-lg shadow hover:bg-pink-300 w-64">📘 Introducing 101</a>
-    <a href="timeline.html" class="bg-yellow-200 text-yellow-900 px-6 py-3 rounded-lg shadow hover:bg-yellow-300 w-64">📅 Yearbook</a>
-    <a href="quiz.html" class="bg-green-200 text-green-900 px-6 py-3 rounded-lg shadow hover:bg-green-300 w-64">❤️ Notes</a>
-    <a href="leaderboard.html" class="bg-blue-200 text-blue-900 px-6 py-3 rounded-lg shadow hover:bg-blue-300 w-64">🏆 Roommate Awards</a>
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      animation: float 6s linear infinite;
+      opacity: 0.6;
+      pointer-events: none;
+      color: #ff6aa4;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fade 1s ease forwards;
+    }
+
+    @keyframes fade {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center text-center p-6">
+
+  <!-- 🎵 Background Music -->
+  <audio id="bg-music" autoplay loop>
+    <source src="assets/music/bg-theme.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- 🔊 Click Sound -->
+  <audio id="click-sound">
+    <source src="assets/music/click.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Floating hearts -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }, 300);
+    });
+  </script>
+
+  <!-- Intro Section -->
+  <div id="intro" class="space-y-4">
+    <h1 class="text-4xl font-bold text-pink-700 fade-in" style="animation-delay: 0.5s">Welcome to Bhagirathi 101 💕</h1>
+    <p class="text-lg text-gray-700 fade-in" style="animation-delay: 1.5s">5 girls. 1 room. 1000 memories. 🌸</p>
+    <p class="text-lg text-gray-700 fade-in" style="animation-delay: 2.5s">From Maggie nights to mad laughs 💫</p>
+    <p class="text-lg text-gray-700 fade-in" style="animation-delay: 3.5s">This one's for us 🤍</p>
+
+    <button id="startBtn" class="mt-6 bg-pink-400 text-white px-6 py-3 rounded-full shadow-lg hover:bg-pink-500 fade-in" style="animation-delay: 4.5s">
+      Let’s Go 🚀
+    </button>
   </div>
 
-  <p class="mt-10 text-gray-500 text-sm italic">Made with love by Raichu 🐭✨</p>
+  <!-- Menu Section (Initially Hidden) -->
+  <div id="menu" class="hidden mt-10 space-y-4">
+    <a href="yearbook.html" class="bg-pink-200 text-pink-900 px-6 py-3 rounded-lg shadow hover:bg-pink-300 w-64 block mx-auto">📘 Introducing 101</a>
+    <a href="timeline.html" class="bg-yellow-200 text-yellow-900 px-6 py-3 rounded-lg shadow hover:bg-yellow-300 w-64 block mx-auto">📅 Yearbook</a>
+    <a href="notes.html" class="bg-green-200 text-green-900 px-6 py-3 rounded-lg shadow hover:bg-green-300 w-64 block mx-auto">❤️ Notes</a>
+    <a href="leaderboard.html" class="bg-blue-200 text-blue-900 px-6 py-3 rounded-lg shadow hover:bg-blue-300 w-64 block mx-auto">🏆 Roommate Awards</a>
+
+    <p class="mt-8 text-gray-500 text-sm italic">Made with love by Raichu 🐭✨</p>
+  </div>
+
+  <!-- 🎬 Animation + Sound Script -->
+  <script>
+    // Fade-in animation timings
+    document.querySelectorAll('.fade-in').forEach(el => {
+      const delay = parseFloat(el.style.animationDelay) || 0;
+      el.style.animation = `fade 1s ease ${delay}s forwards`;
+    });
+
+    const music = document.getElementById('bg-music');
+    const clickSound = document.getElementById('click-sound');
+
+    // Show menu after "Let's Go" button
+    document.getElementById('startBtn').addEventListener('click', () => {
+  clickSound.play();
+
+  // Trigger confetti burst 🎉
+  confetti({
+    particleCount: 150,
+    spread: 80,
+    origin: { y: 0.6 },
+    colors: ['#ff6aa4', '#ffd1dc', '#fff4f8']
+  });
+
+  // Optionally repeat a few bursts
+  setTimeout(() => confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }), 400);
+  setTimeout(() => confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } }), 800);
+
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('menu').classList.remove('hidden');
+});
+  </script>
 </body>
 </html>
