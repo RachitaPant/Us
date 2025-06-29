@@ -7,35 +7,19 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: linear-gradient(to bottom left, #f5f3ff, #fff0f6);
+      background: linear-gradient(to bottom left, #fdf2f8, #f0f9ff);
       overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    .title-bg {
-      background: linear-gradient(90deg, #fbc2eb, #a18cd1);
-    }
-
-    .award-item {
+    .award-card {
       opacity: 0;
-      transform: translateY(20px);
-      animation: slideUp 0.6s ease forwards;
+      animation: slideUp 0.8s ease forwards;
     }
 
     @keyframes slideUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .emoji {
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 0.8; }
-      50% { transform: translateY(-10px); opacity: 1; }
-      100% { transform: translateY(0); opacity: 0.8; }
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     .heart {
@@ -52,164 +36,71 @@
       100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
     }
 
-    /* Chat balloon animations */
-    @keyframes fadeInLeft {
-      0% { opacity: 0; transform: translateX(-40px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes fadeInRight {
-      0% { opacity: 0; transform: translateX(40px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
-
-    .animate-fade-in-left {
-      animation: fadeInLeft 1s ease-in-out forwards;
-    }
-
-    .animate-fade-in-right {
-      animation: fadeInRight 1s ease-in-out forwards;
-    }
-
-    /* Word cloud */
-    @keyframes cloudFloat {
-      0% { transform: translateY(0px); opacity: 0.8; }
-      50% { transform: translateY(-10px); opacity: 1; }
-      100% { transform: translateY(0px); opacity: 0.8; }
-    }
-
-    .animate-cloud {
-      animation: cloudFloat 4s ease-in-out infinite;
-    }
-    .delay-1 { animation-delay: 0.2s; }
-    .delay-2 { animation-delay: 0.4s; }
-    .delay-3 { animation-delay: 0.6s; }
-    .delay-4 { animation-delay: 0.8s; }
-    .delay-5 { animation-delay: 1s; }
-    .delay-6 { animation-delay: 1.2s; }
-
     @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
+      to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .chat-bubble {
+      display: inline-block;
+      background: #fcd5ce;
+      border-radius: 20px;
+      padding: 10px 16px;
+      margin: 8px;
+      max-width: 70%;
+      animation: slideUp 0.8s ease;
+    }
+
+    .word {
+      position: absolute;
+      font-size: 14px;
+      font-weight: bold;
+      animation: floatWord 15s linear infinite;
+      color: #a855f7;
+      opacity: 0.8;
+    }
+
+    @keyframes floatWord {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-120vh) rotate(360deg);
       }
     }
   </style>
 </head>
-<body class="flex flex-col items-center p-6">
+<body class="p-6 text-center">
 
-  <!-- 🎵 Background Music -->
+  <!-- 🎵 Music -->
   <audio id="bg-music" autoplay loop>
     <source src="assets/music/bg-music.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- 💬 Chat Balloons -->
-  <div id="chatBalloons" class="relative w-full max-w-md mb-6 space-y-4">
-    <div class="bg-pink-200 text-pink-900 px-4 py-3 rounded-2xl max-w-[80%] animate-fade-in-left shadow">
-      💬 Kusheen: You’re my safe space, always there 🫶
-    </div>
-    <div class="bg-purple-200 text-purple-900 px-4 py-3 rounded-2xl max-w-[80%] ml-auto animate-fade-in-right shadow">
-      💬 Bhumika: From first bench to last moment, you inspire 💡
-    </div>
-    <div class="bg-yellow-200 text-yellow-900 px-4 py-3 rounded-2xl max-w-[80%] animate-fade-in-left shadow">
-      💬 Iqra: Every chai, every tear — thank you ☕💖
-    </div>
-    <div class="bg-blue-200 text-blue-900 px-4 py-3 rounded-2xl max-w-[80%] ml-auto animate-fade-in-right shadow">
-      💬 Asmi: Calm + chaos = Queen energy 🤓🔥
-    </div>
-  </div>
-
-  <!-- 💬 Intro Message -->
-  <div id="introMessage" class="text-center mb-6 max-w-lg text-lg text-purple-800 font-semibold animate-pulse">
-    <p>✨ Welcome to the most legendary award ceremony of Bhagirathi 101 ✨</p>
-    <p class="mt-2 text-sm text-purple-500 italic">Celebrating our chaos, our calm, and our cutest madness 💖</p>
-    <button onclick="showLeaderboard()" class="mt-4 bg-pink-300 hover:bg-pink-400 text-white px-6 py-2 rounded-full shadow">
-      Let the magic begin 🎉
-    </button>
-  </div>
-
-  <!-- 🏆 Leaderboard -->
-  <div id="leaderboard" class="hidden bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-md">
-    <div class="title-bg text-white text-center py-4 font-semibold text-xl">
-      Roommate Awards
-    </div>
-    <ul class="divide-y text-gray-800">
-      <li class="award-item flex justify-between items-center px-6 py-3">
-        <span>🍳 Chef of the Room</span>
-        <strong>Asmi & Iqra</strong>
-      </li>
-      <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50">
-        <span>📚 Academic Weapon</span>
-        <strong>Bhumika</strong>
-      </li>
-      <li class="award-item flex justify-between items-center px-6 py-3">
-        <span>📸 Selfie Queen</span>
-        <strong>Kusheen</strong>
-      </li>
-      <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50">
-        <span>❤️ Cutu</span>
-        <strong>Rachita (hn m hu) thanks</strong>
-      </li>
-      <li class="award-item flex justify-between items-center px-6 py-3">
-        <span>🎤 Singer</span>
-        <strong>Iqra</strong>
-      </li>
-      <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50">
-        <span>📝 Most Organized</span>
-        <strong>Asmi (competing with Bhumi)</strong>
-      </li>
-      <li class="award-item flex justify-between items-center px-6 py-3">
-        <span>😂 Meme ki Chodi</span>
-        <strong>Bhumika</strong>
-      </li>
-      <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50">
-        <span>💫 Dreamer</span>
-        <strong>Iqra</strong>
-      </li>
-      <li class="award-item flex justify-between items-center px-6 py-3">
-        <span>🌟 Always There Award</span>
-        <strong>Kusheen</strong>
-      </li>
-    </ul>
-  </div>
-
-  <!-- 🌈 Word Cloud -->
-  <div class="mt-12 flex flex-wrap justify-center gap-3 text-center px-4 relative z-10">
-    <span class="text-pink-700 text-xl animate-cloud">midnight maggi</span>
-    <span class="text-purple-700 text-lg animate-cloud delay-1">chai walks</span>
-    <span class="text-blue-700 text-2xl animate-cloud delay-2">laughs</span>
-    <span class="text-yellow-700 text-xl animate-cloud delay-3">room 101</span>
-    <span class="text-green-700 text-lg animate-cloud delay-4">healer</span>
-    <span class="text-rose-700 text-xl animate-cloud delay-5">music</span>
-    <span class="text-indigo-700 text-lg animate-cloud delay-6">stories</span>
-  </div>
-
-  <!-- Links -->
-  <a href="index.html" class="mt-10 text-purple-700 underline">← Back to Home</a>
-  <p class="mt-4 text-gray-500 text-sm italic">Every award is just a reminder of how special you all are 💛</p>
-
-  <!-- Floating Emojis -->
-  <div class="fixed top-4 left-4 text-2xl emoji">🍜</div>
-  <div class="fixed top-10 right-6 text-2xl emoji">🎶</div>
-  <div class="fixed bottom-8 left-8 text-2xl emoji">💖</div>
-  <div class="fixed bottom-12 right-10 text-2xl emoji">☕</div>
-
-  <!-- Floating Hearts -->
+  <!-- 💗 Floating Hearts -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       setInterval(() => {
         const h = document.createElement("div");
         h.className = "heart";
-        h.innerText = "💗";
+        h.innerText = "💖";
         h.style.left = Math.random() * 100 + "vw";
         h.style.animationDuration = 3 + Math.random() * 3 + "s";
         document.body.appendChild(h);
         setTimeout(() => h.remove(), 6000);
-      }, 500);
-    });
-  </script>
+      }, 400);
 
-  <!-- Confetti -->
-  <script>
+      const words = ['trust', 'laughs', 'chai', 'midnight talks', 'maggie', 'roomie', 'hug', 'chaos', 'snacks', 'dreams', 'love', 'bond', 'late night', 'walks'];
+      for (let i = 0; i < 20; i++) {
+        const word = document.createElement("div");
+        word.className = "word";
+        word.innerText = words[Math.floor(Math.random() * words.length)];
+        word.style.left = Math.random() * 100 + "vw";
+        word.style.top = Math.random() * 100 + "vh";
+        word.style.animationDuration = 10 + Math.random() * 20 + "s";
+        document.body.appendChild(word);
+      }
+    });
+
     function launchConfetti() {
       for (let i = 0; i < 100; i++) {
         const confetti = document.createElement("div");
@@ -226,19 +117,71 @@
       }
     }
 
-    function showLeaderboard() {
-      document.getElementById('introMessage').style.display = 'none';
-      document.getElementById('chatBalloons').style.display = 'none';
-      const board = document.getElementById('leaderboard');
-      board.classList.remove('hidden');
-      launchConfetti();
-
-      const items = board.querySelectorAll('.award-item');
-      items.forEach((item, index) => {
-        item.style.animation = `slideUp 0.5s ease forwards`;
-        item.style.animationDelay = `${0.2 * (index + 1)}s`;
-      });
-    }
+    window.onload = launchConfetti;
   </script>
+
+  <!-- 🎤 Intro Message -->
+  <h1 class="text-3xl font-bold text-purple-700 mb-2">Bhagirathi 101 Roomie Awards 🏅</h1>
+  <p class="text-gray-600 italic mb-6">Because every moment deserves a memory, and every roomie a trophy 💖</p>
+
+  <!-- 💬 Chat Bubbles Style Message -->
+  <div class="text-left max-w-xl mx-auto mb-8">
+    <div class="chat-bubble">Btw guys... this is not just a farewell</div>
+    <div class="chat-bubble">...it's a THANK YOU</div>
+    <div class="chat-bubble">For the chaos, love, hugs, fights, fixes and Maggie 💕</div>
+    <div class="chat-bubble">Here's to each of you, the vibe makers of 101 🎉</div>
+  </div>
+
+  <!-- 🏆 Award Cards -->
+  <div class="space-y-6 max-w-xl mx-auto">
+
+    <div class="bg-pink-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 0.2s;">
+      <h2 class="text-xl font-bold text-pink-800">🍳 Chef of the Room</h2>
+      <p class="text-gray-700 mt-2">Asmi & Iqra – for every tasty chaos cooked together 😋</p>
+    </div>
+
+    <div class="bg-yellow-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 0.4s;">
+      <h2 class="text-xl font-bold text-yellow-800">📚 Academic Weapon</h2>
+      <p class="text-gray-700 mt-2">Bhumika – discipline queen + motivator always 💪📖</p>
+    </div>
+
+    <div class="bg-blue-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 0.6s;">
+      <h2 class="text-xl font-bold text-blue-800">📸 Selfie Queen</h2>
+      <p class="text-gray-700 mt-2">Kusheen – every pose, every click = flawless 💁‍♀️✨</p>
+    </div>
+
+    <div class="bg-purple-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 0.8s;">
+      <h2 class="text-xl font-bold text-purple-800">❤️ Cutie Pie Award</h2>
+      <p class="text-gray-700 mt-2">Rachita – the softie, the chaos, the glue 🧸💞</p>
+    </div>
+
+    <div class="bg-rose-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 1s;">
+      <h2 class="text-xl font-bold text-rose-800">🎤 Karaoke Queen</h2>
+      <p class="text-gray-700 mt-2">Iqra – voice full of soul & sparkle 🎶</p>
+    </div>
+
+    <div class="bg-teal-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 1.2s;">
+      <h2 class="text-xl font-bold text-teal-800">📝 Most Organized</h2>
+      <p class="text-gray-700 mt-2">Asmi (rising early), Bhumi (schedule wali) 🗓️✨</p>
+    </div>
+
+    <div class="bg-orange-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 1.4s;">
+      <h2 class="text-xl font-bold text-orange-800">😂 Meme Ki Chodi</h2>
+      <p class="text-gray-700 mt-2">Bhumika – endless memes, endless giggles</p>
+    </div>
+
+    <div class="bg-indigo-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 1.6s;">
+      <h2 class="text-xl font-bold text-indigo-800">💫 Dreamer</h2>
+      <p class="text-gray-700 mt-2">Iqra – fantasy thoughts and story vibes 🌙</p>
+    </div>
+
+    <div class="bg-green-100 rounded-xl p-5 shadow-md award-card" style="animation-delay: 1.8s;">
+      <h2 class="text-xl font-bold text-green-800">🌟 Always There Award</h2>
+      <p class="text-gray-700 mt-2">Kusheen – the safest, strongest buddy 💚</p>
+    </div>
+  </div>
+
+  <a href="index.html" class="block mt-10 text-purple-700 underline">← Back to Home</a>
+  <p class="mt-3 text-gray-500 text-sm italic">Always and forever, Bhagirathi 101 🌙</p>
 </body>
 </html>
