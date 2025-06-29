@@ -211,6 +211,17 @@
       currentIndex = (currentIndex + 1) % slides.length;
       slides[currentIndex].classList.add('active');
     }, 3500);
+   function startAwards() {
+    document.getElementById('splashTitle').style.display = 'none';
+    // Ensure background music resumes (in case of autoplay restrictions)
+    const bgMusic = document.getElementById('bg-music');
+    if (bgMusic.paused) {
+      bgMusic.play().catch(() => {
+        console.log("Autoplay blocked");
+      });
+    }
+    launchConfetti();
+  }
 </script>
 
    <!-- 💬 Chat Bubbles -->
