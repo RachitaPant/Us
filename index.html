@@ -82,7 +82,7 @@
   <div id="menu" class="hidden mt-10 space-y-4">
     <a href="yearbook.html" class="bg-pink-200 text-pink-900 px-6 py-3 rounded-lg shadow hover:bg-pink-300 w-64 block mx-auto">📘 Introducing 101</a>
     <a href="timeline.html" class="bg-yellow-200 text-yellow-900 px-6 py-3 rounded-lg shadow hover:bg-yellow-300 w-64 block mx-auto">📅 Yearbook</a>
-    <a href="notes.html" class="bg-green-200 text-green-900 px-6 py-3 rounded-lg shadow hover:bg-green-300 w-64 block mx-auto">❤️ Notes</a>
+    <a href="quiz.html" class="bg-green-200 text-green-900 px-6 py-3 rounded-lg shadow hover:bg-green-300 w-64 block mx-auto">❤️ Notes</a>
     <a href="leaderboard.html" class="bg-blue-200 text-blue-900 px-6 py-3 rounded-lg shadow hover:bg-blue-300 w-64 block mx-auto">🏆 Roommate Awards</a>
 
     <p class="mt-8 text-gray-500 text-sm italic">Made with love by Raichu 🐭✨</p>
@@ -101,6 +101,7 @@
 
     // Show menu after "Let's Go" button
     document.getElementById('startBtn').addEventListener('click', () => {
+      music.play().catch(e => console.log('Autoplay blocked, user interaction required'));
   clickSound.play();
 
   // Trigger confetti burst 🎉
