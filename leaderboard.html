@@ -19,7 +19,37 @@
     .animate-fadeIn {
       animation: fadeIn 1.5s ease-out forwards;
     }
+.carousel-container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
+    .award-slide {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s ease;
+      transform: scale(0.9);
+    }
+
+    .award-slide.active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 10;
+    }
+
+    .award-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
     @keyframes showCard {
       0% { opacity: 0; transform: scale(0.9) translateY(20px); }
       100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -136,16 +166,15 @@
 
   <!-- 🏆 Awards Container -->
  
-<div class="overflow-hidden relative max-w-2xl mx-auto mt-6">
-  <div id="carouselTrack" class="flex transition-transform duration-500 ease-in-out">
-    <!-- Awards will be injected here -->
+ <div class="carousel-container">
+    <div id="carouselSlides" class="relative w-full h-full">
+      <!-- Cards will be inserted here -->
+    </div>
   </div>
-</div>
 
 
   <!-- 🎤 Back Button -->
-  <a href="index.html" class="block mt-10 text-purple-700 underline">Back to Home</a>
-  <p class="mt-3 text-gray-500 text-sm italic">Always and forever, Bhagirathi 101 🌙</p>
+ 
 
  <script>
   const awards = [
@@ -160,38 +189,28 @@
     { title: "🌟 Always There Award", color: "bg-green-100 text-green-800", desc: "Kusheen – the safest, strongest buddy 💚" , img: "assets/images/always.jpg"},
   ];
 
-  const track = document.getElementById('carouselTrack');
+ const carousel = document.getElementById('carouselSlides');
 
-  // Create all award cards
-  awards.forEach((award) => {
-  const slide = document.createElement('div');
-  slide.className = `min-w-full px-4 py-8 ${award.color} rounded-xl shadow-xl text-left transform scale-95 flex flex-col sm:flex-row items-center gap-6`;
+    awards.forEach((award, idx) => {
+      const card = document.createElement('div');
+      card.className = `award-slide w-full px-4 text-center`;
+      card.innerHTML = `
+        <img src="${award.img}" class="award-image mx-auto mb-6" alt="${award.title}" />
+        <h2 class="text-3xl font-bold mb-2">${award.title}</h2>
+        <p class="text-lg text-gray-700 max-w-md mx-auto">${award.desc}</p>
+      `;
+      if (idx === 0) card.classList.add("active");
+      carousel.appendChild(card);
+    });
 
-  slide.innerHTML = `
-    <img src="${award.img}" alt="${award.title}" class="w-32 h-32 object-cover rounded-full shadow-md border-4 border-white">
-    <div>
-      <h2 class="text-2xl font-bold mb-2">${award.title}</h2>
-      <p class="text-gray-700">${award.desc}</p>
-    </div>
-  `;
-
-  track.appendChild(slide);
-});
-
-
-  let currentIndex = 0;
-
-  function scrollCarousel() {
-    if (currentIndex >= awards.length) return;
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    currentIndex++;
-    setTimeout(scrollCarousel, 5000);
-  }
-
-  function startAwards() {
-    document.getElementById('splashTitle').style.display = 'none';
-    scrollCarousel();
-  }
+    // Auto slide logic
+    let currentIndex = 0;
+    setInterval(() => {
+      const slides = document.querySelectorAll('.award-slide');
+      slides[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].classList.add('active');
+    }, 3500);
 </script>
 
    <!-- 💬 Chat Bubbles -->
@@ -201,5 +220,7 @@
     <div class="chat-bubble">For the chaos, love, hugs, fights, fixes and Maggie 💕</div>
     <div class="chat-bubble">Here's to each of you, the vibe makers of 101 🎉</div>
   </div>
+   <a href="index.html" class="block mt-10 text-purple-700 underline">Back to Home</a>
+  <p class="mt-3 text-gray-500 text-sm italic">Always and forever, Bhagirathi 101 🌙</p>
 </body>
 </html>
