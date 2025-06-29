@@ -6,6 +6,14 @@
   <title>Bhagirathi 101 Awards 🏆</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 1.5s ease-out forwards;
+  }
     body {
       background: linear-gradient(to bottom left, #fdf2f8, #f0f9ff);
       overflow-x: hidden;
@@ -121,7 +129,11 @@
   </script>
 
   <!-- 🎤 Intro Message -->
-  <h1 class="text-3xl font-bold text-purple-700 mb-2 h-[50%]">Bhagirathi 101 Roomie Awards 🏅</h1>
+ <!-- Intro Splash Title -->
+<div id="splashTitle" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+  <h1 class="text-4xl sm:text-6xl font-extrabold text-pink-600 animate-fadeIn">🎉 Bhagirathi 101 Awards 🏆</h1>
+</div>
+
   <p class="text-gray-600 italic mb-6">Because every moment deserves a memory, and every roomie a trophy 💖</p>
 
   <!-- 💬 Chat Bubbles Style Message -->
@@ -224,6 +236,13 @@
     animation: showCard 0.8s ease forwards;
   }
 </style>
+  <script>
+  // Hide splash after 3 seconds
+  setTimeout(() => {
+    document.getElementById('splashTitle').style.display = 'none';
+  }, 3000);
+</script>
+
 
 
   <a href="index.html" class="block mt-10 text-purple-700 underline">← Back to Home</a>
