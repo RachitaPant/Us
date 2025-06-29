@@ -6,6 +6,23 @@
   <title>Bhagirathi 101 Timeline 📅</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    #visualizer .bar {
+  animation: bounce 1s infinite ease-in-out alternate;
+}
+
+#visualizer .bar:nth-child(1) { animation-delay: 0s; }
+#visualizer .bar:nth-child(2) { animation-delay: 0.2s; }
+#visualizer .bar:nth-child(3) { animation-delay: 0.4s; }
+#visualizer .bar:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes bounce {
+  0% { height: 4px; }
+  100% { height: 24px; }
+}
+
+.paused #visualizer .bar {
+  animation-play-state: paused;
+}
     /* Floating hearts */
     .heart {
       position: fixed;
@@ -91,6 +108,28 @@
       }, 400);
     });
   </script>
+
+  <!-- 🎵 Music Player with Visualizer -->
+<div class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-white p-3 rounded-full shadow-lg">
+  <!-- Play Button -->
+  <button id="music-btn" class="w-10 h-10 bg-pink-400 rounded-full text-white text-lg flex items-center justify-center shadow-md">
+    ▶️
+  </button>
+
+  <!-- Visualizer Bars -->
+  <div id="visualizer" class="flex items-end gap-1 h-6">
+    <div class="w-1 bg-pink-400 h-2 rounded bar"></div>
+    <div class="w-1 bg-pink-500 h-3 rounded bar"></div>
+    <div class="w-1 bg-pink-400 h-2 rounded bar"></div>
+    <div class="w-1 bg-pink-300 h-1 rounded bar"></div>
+  </div>
+</div>
+
+<!-- Audio Element -->
+<audio id="bg-music" loop>
+  <source src="assets/music/roommates-theme.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
 
   <div class="relative z-10 p-6 space-y-4">
     <h1 class="text-3xl font-bold text-center">📅 Bhagirathi 101 Timeline</h1>
@@ -323,6 +362,26 @@
     }, { threshold: 0.3 });
 
     items.forEach(el => obs.observe(el));
+  </script>
+  <script>
+  const music = document.getElementById('bg-music');
+  const button = document.getElementById('music-btn');
+  const visualizerContainer = document.getElementById('visualizer').parentElement;
+
+  let isPlaying = false;
+
+  button.addEventListener('click', () => {
+    if (!isPlaying) {
+      music.play();
+      button.textContent = '⏸️';
+      visualizerContainer.classList.remove('paused');
+    } else {
+      music.pause();
+      button.textContent = '▶️';
+      visualizerContainer.classList.add('paused');
+    }
+    isPlaying = !isPlaying;
+  });
   </script>
 </body>
 </html>
