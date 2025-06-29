@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bhagirathi 101 Quiz 🧠</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-white to-green-50 min-h-screen flex flex-col items-center p-6">
+
+  <h1 class="text-3xl font-bold mb-4">Bhagirathi 101 Quiz 🧠</h1>
+  <p class="text-gray-600 mb-8 text-center max-w-md">Test how well you know your roommates! 🤩</p>
+
+  <div id="quiz-container" class="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
+    <div id="question" class="text-lg font-semibold mb-4"></div>
+    <div id="answers" class="grid gap-3 mb-6"></div>
+    <button id="next-btn" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 disabled:opacity-50" disabled>
+      Next ▶️
+    </button>
+  </div>
+
+  <div id="result" class="mt-8 text-center text-xl font-semibold text-green-700 hidden"></div>
+  <button id="restart-btn" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hidden hover:bg-blue-600">Restart Quiz 🔄</button>
+
+  <a href="index.html" class="mt-6 text-sm text-green-600 underline">← Back to Home</a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const quizData = [
+        { q: "Who always made Maggie at midnight?", a: ["Asmi","Bhumika","Kusheen","Iqra"], correct: 3 },
+        { q: "Who can be a future vlogger?", a: ["Rachita","Iqra","Kusheen","Bhumika"], correct: 2},
+        { q: "Who gave the best group hugs?", a: ["Bhumika","Asmi","Kusheen","Rachita"], correct: 2 },
+        { q: "Who is the funniest?", a: ["Iqra","Kusheen","Asmi","Rachita"], correct: 3 },
+        { q: "Who finished the Maggi packets fast?", a: ["All of them","Rachita","Kusheen","Bhumika"], correct: 0 }
+      ];
+
+      let current = 0, score = 0;
+      const quizContainer = document.getElementById("quiz-container");
+      const questionEl = document.getElementById("question");
+      const answersEl = document.getElementById("answers");
+      const nextBtn = document.getElementById("next-btn");
+      const resultEl = document.getElementById("result");
+      const restartBtn = document.getElementById("restart-btn");
+
+      function loadQuestion() {
+        const d = quizData[current];
+        questionEl.innerText = d.q;
+        answersEl.innerHTML = "";
+        d.a.forEach((ans, idx) => {
+          const btn = document.createElement("button");
+          btn.innerText = ans;
+          btn.className = "bg-green-100 hover:bg-green-200 rounded py-2 px-4 text-left";
+          btn.onclick = () => selectAnswer(idx, btn);
+          answersEl.appendChild(btn);
+        });
+        nextBtn.disabled = true;
+      }
+
+      function selectAnswer(idx, btn) {
+        if (idx === quizData[current].correct) {
+          score++;
+          btn.classList.add("bg-green-300");
+        } else {
+          btn.classList.add("bg-red-300");
+          answersEl.children[quizData[current].correct].classList.add("bg-green-300");
+        }
+        Array.from(answersEl.children).forEach(b => b.disabled = true);
+        nextBtn.disabled = false;
+      }
+
+      nextBtn.onclick = () => {
+        current++;
+        if (current < quizData.length) {
+          loadQuestion();
+        } else {
+          showResult();
+        }
+      };
+
+      function showResult() {
+        quizContainer.classList.add("hidden");
+        resultEl.classList.remove("hidden");
+        restartBtn.classList.remove("hidden");
+        const percent = Math.round((score / quizData.length) * 100);
+        resultEl.innerText = `🎉 You scored ${score}/${quizData.length} (${percent}%)`;
+      }
+
+      restartBtn.onclick = () => {
+        current = 0;
+        score = 0;
+        quizContainer.classList.remove("hidden");
+        resultEl.classList.add("hidden");
+        restartBtn.classList.add("hidden");
+        loadQuestion();
+      };
+
+      loadQuestion();
+    });
+  </script>
+</body>
+</html>

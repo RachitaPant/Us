@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bhagirathi 101 Yearbook 💖</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .clip {
+      @apply absolute top-0 left-1/2 -translate-x-1/2 -translate-y-3;
+    }
+
+    /* Floating heart */
+    .heart {
+      position: fixed;
+      color: #ff69b4;
+      font-size: 24px;
+      animation: float 5s linear infinite;
+      pointer-events: none;
+      opacity: 0.7;
+      z-index: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
+
+    /* Auto-scrolling timeline */
+    .scroll-wrapper {
+      overflow-x: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+    .scroll-track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scroll-left 30s linear infinite;
+    }
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-white to-pink-50 min-h-screen overflow-y-auto relative">
+
+<!-- Floating hearts -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }, 400);
+  });
+</script>
+
+<div class="relative z-10 p-4 sm:p-6">
+
+  <!-- Title -->
+  <h1 class="text-4xl text-center font-bold mb-8">Bhagirathi 101 Yearbook 📘</h1>
+
+  <!-- Introduce Roommates -->
+  <h2 class="text-2xl font-semibold text-center mb-6">Meet the Roommates 💫</h2>
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 justify-items-center">
+    <!-- Each roommate card -->
+    <div class="bg-white rounded-xl shadow-md p-4 w-40 text-center rotate-[-2deg]">
+      <img src="https://via.placeholder.com/150" class="rounded-full mx-auto mb-2" />
+      <p class="font-medium">Asmi</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-md p-4 w-40 text-center rotate-[1deg]">
+      <img src="https://via.placeholder.com/150" class="rounded-full mx-auto mb-2" />
+      <p class="font-medium">Bhumika</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-md p-4 w-40 text-center rotate-[-1deg]">
+      <img src="https://via.placeholder.com/150" class="rounded-full mx-auto mb-2" />
+      <p class="font-medium">Kusheen</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-md p-4 w-40 text-center rotate-[2deg]">
+      <img src="https://via.placeholder.com/150" class="rounded-full mx-auto mb-2" />
+      <p class="font-medium">Rachita</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-md p-4 w-40 text-center rotate-[-3deg]">
+      <img src="https://via.placeholder.com/150" class="rounded-full mx-auto mb-2" />
+      <p class="font-medium">Iqra</p>
+    </div>
+  </div>
+
+  <!-- Timeline Section -->
+  <h2 class="text-2xl font-semibold text-center mt-10 mb-4">Moments from August 2024 to June 2025 🗓️</h2>
+  <div class="scroll-wrapper border-t-2 border-pink-300 py-4">
+    <div class="scroll-track flex gap-6 px-4">
+
+      <!-- Each timeline item -->
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Aug 2024</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Sept 2024</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Oct 2024</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Nov 2024</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Dec 2024</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Jan 2025</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Feb 2025</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Mar 2025</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">Apr 2025</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">May 2025</p>
+      </div>
+
+      <div class="w-40 bg-white shadow rounded p-2 text-center">
+        <img src="https://via.placeholder.com/150" class="rounded mb-2" />
+        <p class="text-sm font-medium">June 2025</p>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="text-center mt-10 text-gray-500 italic text-sm">
+    Forever Bhagirathi 101 — Love, Laughter, and Late Night Maggie 🌙🍜
+  </p>
+
+</div>
+</body>
+</html>
