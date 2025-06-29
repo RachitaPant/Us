@@ -8,7 +8,6 @@
   <style>
     body {
       background: linear-gradient(to bottom left, #f5f3ff, #fff0f6);
-
       overflow-x: hidden;
     }
 
@@ -38,9 +37,29 @@
       50% { transform: translateY(-10px); opacity: 1; }
       100% { transform: translateY(0); opacity: 0.8; }
     }
+
+    .heart {
+      position: fixed;
+      color: #ff69b4;
+      font-size: 18px;
+      animation: floatUp 6s linear infinite;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
   </style>
 </head>
 <body class="flex flex-col items-center p-6">
+
+  <!-- 🎵 Background Music (Soft Loop) -->
+  <audio id="bg-music" autoplay loop>
+    <source src="assets/music/bg-music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <!-- 💬 Animated Intro Message -->
   <div id="introMessage" class="text-center mb-6 max-w-lg text-lg text-purple-800 font-semibold animate-pulse">
@@ -53,7 +72,6 @@
 
   <!-- 🏆 Leaderboard Hidden Initially -->
   <div id="leaderboard" class="hidden bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-md">
-
     <div class="title-bg text-white text-center py-4 font-semibold text-xl">
       Roommate Awards
     </div>
@@ -71,8 +89,8 @@
         <strong>Kusheen</strong>
       </li>
       <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50" style="animation-delay: 0.8s">
-        <span> Cutu ❤️🙊</span>
-        <strong>Rachita(hn m hu) thanks</strong>
+        <span>❤️ Cutu</span>
+        <strong>Rachita (hn m hu) thanks</strong>
       </li>
       <li class="award-item flex justify-between items-center px-6 py-3" style="animation-delay: 1s">
         <span>🎤 Singer</span>
@@ -80,10 +98,10 @@
       </li>
       <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50" style="animation-delay: 1.2s">
         <span>📝 Most Organized</span>
-        <strong>Asmi strongly competiting with Bhumi</strong>
+        <strong>Asmi (strongly competing with Bhumi)</strong>
       </li>
       <li class="award-item flex justify-between items-center px-6 py-3" style="animation-delay: 1.4s">
-        <span>😂 Meme ki chodi</span>
+        <span>😂 Meme ki Chodi</span>
         <strong>Bhumika</strong>
       </li>
       <li class="award-item flex justify-between items-center px-6 py-3 bg-blue-50" style="animation-delay: 1.6s">
@@ -100,17 +118,50 @@
   <a href="index.html" class="mt-10 text-purple-700 underline">← Back to Home</a>
   <p class="mt-4 text-gray-500 text-sm italic">Every award is just a reminder of how special you all are 💛</p>
 
-  <!-- 🎈 Floating Emojis (background fun) -->
+  <!-- 🎈 Floating Emojis -->
   <div class="fixed top-4 left-4 text-2xl emoji">🍜</div>
   <div class="fixed top-10 right-6 text-2xl emoji">🎶</div>
   <div class="fixed bottom-8 left-8 text-2xl emoji">💖</div>
   <div class="fixed bottom-12 right-10 text-2xl emoji">☕</div>
 
+  <!-- 💖 Floating Hearts -->
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      setInterval(() => {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerText = "💗";
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.animationDuration = 3 + Math.random() * 3 + "s";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 6000);
+      }, 500);
+    });
+  </script>
+
+  <!-- 🎉 Confetti (on reveal) -->
+  <script>
+    function launchConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement("div");
+        confetti.textContent = "✨";
+        confetti.style.position = "fixed";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = "-20px";
+        confetti.style.fontSize = "16px";
+        confetti.style.color = "#a855f7";
+        confetti.style.animation = `fall 2s linear forwards`;
+        confetti.style.opacity = Math.random();
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2000);
+      }
+    }
+
     function showLeaderboard() {
       document.getElementById('introMessage').style.display = 'none';
       const board = document.getElementById('leaderboard');
       board.classList.remove('hidden');
+      launchConfetti();
 
       const items = board.querySelectorAll('.award-item');
       items.forEach((item, index) => {
@@ -119,5 +170,14 @@
       });
     }
   </script>
+
+  <style>
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
 </body>
 </html>
